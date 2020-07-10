@@ -1,10 +1,20 @@
 request = require('request')
+currencyModel = require('../database/models/currency-model')
 
-const parseJSON = jsonStringBody => {
-    dataBody = JSON.parse(jsonStringBody)['data']['market_cap_percentage']
-    for (key in dataBody){
-        console.log(key)
-        console.log(dataBody[key])
+const saveResult = jsonStringBody => {
+    data = JSON.parse(jsonStringBody)['data']['market_cap_percentage']
+    for (key in data){
+        let testObj = {
+            name: key,
+            value: data[key]
+        }
+        currencyModel.currencyModel.updateOne(testObj, (err, res) => {
+            if(err) return console.log(err);
+            else if (res.n == 0) {
+                let model = currencyModel.currencyModel(testObj)
+                model.save()
+            }
+        })
     }
 }
 
@@ -19,7 +29,7 @@ exports.refreshInfo = (req, res) => {
             console.log('err: ')
         }
         else {
-            parseJSON(response.body)
+            saveResult(response.body)
         }
     })
     res.redirect('back')
