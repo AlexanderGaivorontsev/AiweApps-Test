@@ -8,7 +8,7 @@ connection.once('open', function () {
   })
 
 const currencyScheme = new mongoose.Schema({
-    name: String,
+    id: String,
     value: Number
 })
 

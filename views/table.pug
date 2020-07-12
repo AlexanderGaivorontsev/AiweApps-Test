@@ -1,0 +1,11 @@
+extends index-layout
+block content
+    -let resultArr = JSON.parse(data)
+    table(id="result-table")
+        tr 
+            th ID:
+            th Current value:
+        -for (let ind in resultArr)
+            tr
+                td #{resultArr[ind]['id']}
+                td #{resultArr[ind]['value']}

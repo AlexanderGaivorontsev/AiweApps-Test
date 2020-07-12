@@ -5,7 +5,7 @@ const saveResult = jsonStringBody => {
     data = JSON.parse(jsonStringBody)['data']['market_cap_percentage']
     for (key in data){
         let testObj = {
-            name: key,
+            id: key,
             value: data[key]
         }
         currencyModel.currencyModel.updateOne(testObj, (err, res) => {
@@ -32,10 +32,14 @@ exports.refreshInfo = (req, res) => {
             saveResult(response.body)
         }
     })
-    res.redirect('back')
+    res.redirect('/')
 }
 
 exports.getInfo = (req, res) => {
     console.log('get_info req <----')
-    res.redirect('back')
+    currencyModel.currencyModel.find({}).then(doc => {
+        res.render('../views/table.pug', {data: JSON.stringify(doc)}, (err, html) => {
+            res.send(html)
+        })
+    })
 }

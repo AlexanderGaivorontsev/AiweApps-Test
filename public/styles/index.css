@@ -14,3 +14,9 @@ a {
     border-radius: 25px;
     text-decoration: none;
 }
+
+th, td{
+    padding: 10px 20px;
+    font-size: 17px;
+    text-align: center;
+}
